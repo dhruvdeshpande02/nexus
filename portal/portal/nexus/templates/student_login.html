@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Student Login</title>
+  </head>
+  <body>
+    <h2>Student Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      <label for="id_username">PRN:</label>
+      <input type="text" name="username" id="id_username" />
+      <br />
+      <label for="id_password">Password:</label>
+      <input type="password" name="password" id="id_password" />
+      <br />
+      <button type="submit">Login</button>
+    </form>
+    <br />
+    <a href="{% url 'student_registration' %}">Register</a>
+  </body>
+</html>
