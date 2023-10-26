@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title style="text-align: center;">Create Coordinator Account</title>
+    <style>
+    
+      /* Background color gradient */
+      body {
+        background: linear-gradient(45deg, #3f7ad3, #3f7ad39c);
+        color: #fff;
+        padding-top: 2rem;
+        overflow-y: auto;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+        text-align: center;
+        text-transform: uppercase;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      form {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 2rem;
+        border-radius: 15px;
+        width: 80%;
+        max-width: 800px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        margin: 0 auto;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin: 0.5rem 0;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        color: #fff;
+        transition: background-color 0.3s ease;
+      }
+
+      input::placeholder,
+      select {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      input:focus,
+      select:focus {
+        background: rgba(255, 255, 255, 0.2);
+        outline: none;
+      }
+
+      button {
+        display: block;
+        margin: 1rem auto 0 auto;
+        padding: 10px 15px;
+        background-color: rgba(230, 230, 230, 0.9);
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      button:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+        transform: scale(1.05);
+      }
+
+      button:focus {
+        outline: none;
+      }
+    </style>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %} {{ form.as_p }}
+      <button class="btn-register" type="submit">REGISTER</button>
+    </form>
+  </div>
+  </body>
+</html>
