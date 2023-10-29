@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coordinator Login</title>
+  </head>
+  <body>
+    <h2>Coordinator Login</h2>
+    <form method="post">
+      {% csrf_token %} {{ form.F_ID.label_tag }} {{ form.F_ID }}
+      <br />
+      {{ form.f_password.label_tag }} {{ form.f_password }}
+      <br />
+      <button type="submit">Login</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Notice List</title>
+  </head>
+  <body>
+    <h2>Notice List</h2>
+    <table
+      style="
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        border-collapse: collapse;
+      "
+    >
+      <thead>
+        <tr style="background-color: #3f7ad3; color: #fff; font-weight: bold">
+          <th style="padding: 10px">ID</th>
+          <th style="padding: 10px">Type</th>
+          <th style="padding: 10px">Title</th>
+          <th style="padding: 10px">Date</th>
+          <th style="padding: 10px">Uploaded By</th>
+          <th style="padding: 10px">PDF File</th>
+          <th style="padding: 10px">Apply to Notice</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for notice in notices %}
+        <tr>
+          <td style="padding: 10px">{{ notice.id }}</td>
+          <td style="padding: 10px">{{ notice.notice_type }}</td>
+          <td style="padding: 10px">{{ notice.title }}</td>
+          <td style="padding: 10px">{{ notice.notice_date }}</td>
+          <td style="padding: 10px">{{ notice.uploaded_by.username }}</td>
+          <td style="padding: 10px">
+            <a
+              href="{{ notice.file.url }}"
+              target="_blank"
+              style="text-decoration: none; color: #3f7ad3; font-weight: bold"
+              >View PDF</a
+            >
+          </td>
+          <td style="padding: 10px"></td>
+          <td style="padding: 10px">
+            <form method="post">
+              {% csrf_token %}
+              <button
+                type="submit"
+                style="
+                  font-size: 1rem;
+                  padding: 5px 10px;
+                  background-color: #3f7ad3;
+                  color: #fff;
+                  border: none;
+                  border-radius: 5px;
+                  cursor: pointer;
+                "
+              >
+                Apply
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

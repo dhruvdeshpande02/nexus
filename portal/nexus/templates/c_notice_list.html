@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title style="text-align: center">Notice List</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    "
+  >
+    <h2 style="font-size: 2rem; margin-top: 1rem; text-transform: uppercase">
+      Notice List
+    </h2>
+    <table
+      style="
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        border-collapse: collapse;
+      "
+    >
+      <thead>
+        <tr style="background-color: #3f7ad3; color: #fff; font-weight: bold">
+          <th style="padding: 10px">ID</th>
+          <th style="padding: 10px">Type</th>
+          <th style="padding: 10px">Title</th>
+          <th style="padding: 10px">Date</th>
+          <th style="padding: 10px">Uploaded By</th>
+          <th style="padding: 10px">PDF File</th>
+          <th style="padding: 10px">Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for notice in notices %}
+        <tr>
+          <td style="padding: 10px">{{ notice.id }}</td>
+          <td style="padding: 10px">{{ notice.notice_type }}</td>
+          <td style="padding: 10px">{{ notice.title }}</td>
+          <td style="padding: 10px">{{ notice.notice_date }}</td>
+          <td style="padding: 10px">{{ notice.uploaded_by.username }}</td>
+          <td style="padding: 10px">
+            <a
+              href="{{ notice.file.url }}"
+              target="_blank"
+              style="text-decoration: none; color: #3f7ad3; font-weight: bold"
+              >View PDF</a
+            >
+          </td>
+          <td style="padding: 10px">
+            <a
+              href="{% url 'notice_detail' notice.id %}"
+              style="text-decoration: none; color: #3f7ad3; font-weight: bold"
+              >Detail</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
