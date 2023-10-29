@@ -19,7 +19,7 @@
           <th style="padding: 10px">Type</th>
           <th style="padding: 10px">Title</th>
           <th style="padding: 10px">Date</th>
-          <th style="padding: 10px">Uploaded By</th>
+
           <th style="padding: 10px">PDF File</th>
           <th style="padding: 10px">Apply to Notice</th>
         </tr>
@@ -31,7 +31,7 @@
           <td style="padding: 10px">{{ notice.notice_type }}</td>
           <td style="padding: 10px">{{ notice.title }}</td>
           <td style="padding: 10px">{{ notice.notice_date }}</td>
-          <td style="padding: 10px">{{ notice.uploaded_by.username }}</td>
+
           <td style="padding: 10px">
             <a
               href="{{ notice.file.url }}"

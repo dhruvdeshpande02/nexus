@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coordinator List</title>
+    <title>Notice List</title>
     <style>
       /* Reset some default styles */
       * {
@@ -65,12 +65,6 @@
         font-size: 16px;
       }
 
-      .navbar a:hover,
-      .nav-link:hover {
-        /* Style for hover state of links */
-        text-decoration: underline;
-      }
-
       table {
         width: 100%;
         max-width: 800px;
@@ -109,6 +103,60 @@
       a:hover {
         text-decoration: underline;
       }
+
+      .erp-button,
+      .logout-button,
+      .upload-button {
+        /* Style for the UPLOAD NOTICE button */
+        padding: 10px 20px;
+        background-color: #3f7ad3;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+
+      .erp-button:hover,
+      .logout-button:hover,
+      .upload-button:hover {
+        background-color: #3066a9;
+      }
+
+      /* Spacing and alignment for navigation links */
+      .logo-container,
+      #collegeText {
+        text-align: left;
+      }
+
+      .navbar {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+      }
+
+      .erp-button,
+      .logout-button {
+        text-align: right;
+      }
+
+      .nav-link {
+        display: inline-block;
+        margin-left: 20px;
+      }
+
+      .nav-link.active {
+        text-decoration: underline;
+      }
+
+      /* Center-align the title */
+      h2 {
+        font-size: 2rem;
+        margin-top: 1rem;
+        text-transform: uppercase;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
@@ -123,21 +171,19 @@
       </div>
 
       <div class="navbar">
-        <a href="{%url 'tnp_home'%}">DASHBOARD</a>
-        <a href="{%url 'studentlist'%}">DATABASE</a>
+        <a href="#">DASHBOARD</a>
       </div>
       <div>
         <a class="nav-link erp-button" href="https://erp.mgmu.ac.in/login.htm"
           >ERP</a
         >
-        <a class="nav-link logout-button" href="{% url 'tnp_login'%}">LOGOUT</a>
+        <a class="nav-link logout-button" href="{% url 'student_login' %}"
+          >LOGOUT</a
+        >
       </div>
     </header>
 
-    <h2 style="text-align: center">
-      <!-- Center-align the title -->
-      Coordinator List
-    </h2>
+    <h2>Notice List</h2>
 
     <table
       style="
@@ -150,24 +196,29 @@
       <thead>
         <tr style="background-color: #3f7ad3; color: #fff; font-weight: bold">
           <th style="padding: 10px">ID</th>
-          <th style="padding: 10px">Department</th>
-          <th style="padding: 10px">Name</th>
-          <th style="padding: 10px">Phone number</th>
-          <th style="padding: 10px">Email</th>
-          <th style="padding: 10px">Personal email</th>
-          <th style="padding: 10px">Institute</th>
+          <th style="padding: 10px">Type</th>
+          <th style="padding: 10px">Title</th>
+          <th style="padding: 10px">Date</th>
+          <th style="padding: 10px">Uploaded By</th>
+          <th style="padding: 10px">PDF File</th>
         </tr>
       </thead>
       <tbody>
-        {% for coordinator in coordinators %}
+        {% for notice in notices %}
         <tr>
-          <td style="padding: 10px">{{ coordinator.F_ID }}</td>
-          <td style="padding: 10px">{{ coordinator.F_DEPARTMENT }}</td>
-          <td style="padding: 10px">{{ coordinator.F_NAME }}</td>
-          <td style="padding: 10px">{{ coordinator.F_PHONE_NO }}</td>
-          <td style="padding: 10px">{{ coordinator.F_EMAIL }}</td>
-          <td style="padding: 10px">{{ coordinator.F_Personal_Email }}</td>
-          <td style="padding: 10px">{{ coordinator.F_INSTITUTE }}</td>
+          <td style="padding: 10px">{{ notice.id }}</td>
+          <td style="padding: 10px">{{ notice.notice_type }}</td>
+          <td style="padding: 10px">{{ notice.title }}</td>
+          <td style="padding: 10px">{{ notice.notice_date }}</td>
+          <td style="padding: 10px">{{ notice.uploaded_by.username }}</td>
+          <td style="padding: 10px">
+            <a
+              href="{{ notice.file.url }}"
+              target="_blank"
+              style="text-decoration: none; color: #3f7ad3; font-weight: bold"
+              >View PDF</a
+            >
+          </td>
         </tr>
         {% endfor %}
       </tbody>

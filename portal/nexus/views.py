@@ -1,5 +1,6 @@
 # views.py
 
+from audioop import reverse
 import pdb
 from django.shortcuts import render, redirect
 from .forms import CoordinatorCreationForm,StudentRegistrationForm,CoordinatorLoginForm,NoticeForm,TnpAdminLoginForm
@@ -13,22 +14,99 @@ from django.contrib.auth.decorators import user_passes_test
 
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 def home(request):
-    if request.method == 'GET':
-        # Your view logic for handling GET requests
-        return render(request, 'home.html')
+    if request.method == 'POST':
+        notices = Notice.objects.all()  # Fetch all notices (you can add filtering logic if needed)
+        return render(request, 'student_home.html', {'notices': notices})
+    
+def coordinator_home(request):
+    if request.method == 'POST':
+        notices = Notice.objects.all()  # Fetch all notices (you can add filtering logic if needed)
+    return render(request, 'c_home.html', {'notices': notices})
 
+def tnp_home(request):
+    if request.method == 'POST':
+        notices = Notice.objects.all()  # Fetch all notices (you can add filtering logic if needed)
+        return render(request, 'tnp_home.html', {'notices': notices})      
+
+def student_registration(request):
+    if request.method == 'POST':
+        form = StudentRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save(True)  # Save the form data to the database
+            return redirect('student_login')
+            # You can add a success message or redirect to a different page
+        debug =True  
+    else:
+        form = StudentRegistrationForm()
+
+    return render(request, 'student_registration.html', {'form': form})
  
+def student_login(request):
+    if request.method == 'POST':
+        S_PRN = request.POST['S_PRN']
+        s_password = request.POST['s_password']
 
+        # You should implement your student authentication logic here
+        # Verify the PRN and password against your student database
+
+        if S_PRN == 'your_prn' and s_password == 'your_password':
+            # Authentication succeeded
+            request.session['student_id'] = S_PRN  # Create a session ID
+            return redirect('home')  # Redirect to student dashboard or any desired page
+        else:
+            error_message = 'Invalid PRN or password'
+    else:
+        error_message = None
+
+    return render(request, 'student_login.html', {'error_message': error_message}) 
+
+def coordinator_login(request):
+    if request.method == 'POST':
+        F_ID = request.POST['F_ID']
+        F_password = request.POST['f_password']
+
+        # You should implement your student authentication logic here
+        # Verify the PRN and password against your student database
+
+        if F_ID == 'your_prn' and F_password == 'your_password':
+            # Authentication succeeded
+            request.session['tnp_id'] = F_ID  # Create a session ID
+            return redirect('tnp_home')  # Redirect to student dashboard or any desired page
+        else:
+            error_message = 'Invalid PRN or password'
+    else:
+        error_message = None
+        return render(request, 'coordinator_login.html', {'error_message': error_message})
+
+def tnp_login(request):
+    if request.method == 'POST':
+        T_ID = request.POST['T_ID']
+        t_password = request.POST['t_password']
+
+        # You should implement your student authentication logic here
+        # Verify the PRN and password against your student database
+
+        if T_ID == 'your_prn' and t_password == 'your_password':
+            # Authentication succeeded
+            request.session['tnp_id'] = T_ID  # Create a session ID
+            return redirect('tnp_home')  # Redirect to student dashboard or any desired page
+        else:
+            error_message = 'Invalid PRN or password'
+    else:
+        error_message = None
+
+    return render(request, 'tnp_login.html', {'error_message': error_message})
+    
 def create_coordinator_view(request):
     if request.method == 'POST':
         form = CoordinatorCreationForm(request.POST)
         if form.is_valid():
             coordinator = form.save(commit=True)
             
-            return redirect('coordinator-list/')
+            return redirect('coordinator_list')
         else:
             print(form.errors)
     else:
@@ -48,7 +126,7 @@ def create_notice(request):
             notice = form.save(commit=False)
             notice.uploaded_by = request.user
             notice.save()
-            return redirect('cnotice_list')  # Redirect to the list of notices
+             # Redirect to the list of notices
     else:
         form = NoticeForm()
     return render(request, 'notice_form.html', {'form': form})
@@ -58,18 +136,7 @@ def coordinator_list(request):
     context = {'coordinators': coordinators}
     return render(request, 'coordinator_list.html', context)
 
-def student_registration(request):
-    if request.method == 'POST':
-        form = StudentRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save(True)  # Save the form data to the database
-            return redirect('student_login')
-            # You can add a success message or redirect to a different page
-        debug =True  
-    else:
-        form = StudentRegistrationForm()
 
-    return render(request, 'student_registration.html', {'form': form})
 
 
 def student_list(request):
@@ -87,22 +154,10 @@ from django.shortcuts import render, redirect
 from .models import Student
 
 
-def student_login(request):
-    error_message = None
+from django.shortcuts import render, redirect
 
-    if request.method == 'POST':
-        S_PRN = request.POST.get('S_PRN')
-        s_password = request.POST.get('s_password')
 
-        # Authenticate the student
-        student = authenticate(request, S_PRN=S_PRN, s_password=s_password)
 
-        if student is not None:
-            login(request, student)
-            return redirect('home')  # Redirect to the 'home' page upon successful login
-        else:
-            error_message = 'Invalid PRN or password'
-    return render(request, 'student_login.html', {'error_message': error_message})
 
 
 
@@ -110,36 +165,11 @@ def student_login(request):
 
 
 from django.views.generic.edit import FormView
-class CoordinatorLoginView(FormView):
-    template_name = 'coordinator_login.html'
-    form_class = CoordinatorLoginForm
 
-    def form_valid(self, form):
-        # Get form data
-        F_ID = form.cleaned_data['F_ID']
-        f_password = form.cleaned_data['f_password']
 
-        # Authenticate the coordinator
-        user = authenticate(request=self.request, F_ID=F_ID, f_password=f_password)
 
-        if user is not None:
-            login(self.request, user)
-            return super().form_valid(form)
-        else:
-            form.add_error(None, 'Invalid F_ID or password')
-            return self.form_invalid(form)
 
-    def get_success_url(self):
-        return reverse_lazy('home') 
 
-class TNPAdminLoginView(LoginView):
-    template_name = 'tnp_admin_login.html'  # Create this template
-    form_class = TnpAdminLoginForm
-    success_url = reverse_lazy('home')  # Redirect to the 'home' URL after successful login
-
-def c_notice_list(request):
-    notices = Notice.objects.all()  # Fetch all notices (you can add filtering logic if needed)
-    return render(request, 'c_notice_list.html', {'notices': notices})
 
 def s_notice_list(request):
     notices = Notice.objects.all()  # Fetch all notices (you can add filtering logic if needed)
@@ -220,15 +250,14 @@ def apply_to_notice(request, notice_id):
     # Handle errors or render a success message as needed
     return render(request, 'home.html', {'form': form, 'notice': notice})
 
-from .models import Notice
-
-def notice_delete(request, notice_id):
-    # Get the notice object by its ID
-    notice = get_object_or_404(Notice, id=notice_id)
-
-    if request.method == 'POST':
-        # Check if the request method is POST
-        notice.delete()  # Delete the notice
-        return redirect('cnotice_list')  # Redirect to the notice list page after deletion
-
-    return render(request, 'notice_delete_confirm.html', {'notice': notice})
+def undertaking_submit(request):
+    if request.method == "POST":
+        # Form submitted
+        if "agree" in request.POST:
+            # Checkbox is checked
+            # Perform any necessary backend actions here
+            # For example, store the fact that the student has agreed to the undertaking
+            # Redirect to the "student_login" page
+            return HttpResponseRedirect(reverse("student_login"))  # Assuming "student_login" is your URL name
+    # If the checkbox is not checked or it's a GET request, stay on the current page
+    return render(request, "undertaking.html")  # Replace "undertaking.html" with your template path

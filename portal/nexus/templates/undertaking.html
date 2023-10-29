@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Undertaking - College Nexus</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Link to your CSS file -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Background color gradient */
+      body {
+        background: linear-gradient(
+          to right,
+          #3f7ad3,
+          #5a9bea
+        ); /* Horizontal gradient using your color scheme */
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat", sans-serif;
+        color: #333;
+      }
+
+      /* Styling for undertaking content */
+      .undertaking-container {
+        background-color: #e6f0ff; /* Light background color */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px auto; /* Center the container */
+        max-width: 800px; /* Set a maximum width for the container */
+        text-align: center; /* Center text content */
+      }
+
+      .undertaking-heading {
+        font-weight: 700;
+        font-size: 32px;
+        color: #3f7ad3; /* Your primary color */
+      }
+
+      .undertaking-container p {
+        font-size: 18px;
+        line-height: 1.6;
+        margin: 20px 0;
+      }
+
+      .agree-section {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Center horizontally */
+        margin-top: 20px;
+      }
+
+      .agree-section input[type="checkbox"] {
+        margin-right: 10px;
+      }
+
+      .submit-section {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        margin-top: 30px;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #3f7ad3; /* Your primary color */
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #3066a9; /* Slightly lighter on hover */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="undertaking-container">
+        <h1 class="undertaking-heading">UNDERTAKING</h1>
+        <p>
+          I, [Student Name], enrolled under [PRN/Registration Number], hereby
+          undertake that all the information provided by me is accurate and
+          up-to-date. Any misinformation may lead to disciplinary actions as per
+          college regulations. I have thoroughly checked and verified all my
+          details and ensure its authenticity.
+        </p>
+        <p>
+          I also understand and agree to abide by all the rules and regulations
+          of the college and will follow the academic and ethical standards
+          expected of a student.
+        </p>
+        <p>
+          I pledge to maintain academic integrity and not engage in any form of
+          plagiarism or cheating during my academic journey in this institution.
+        </p>
+        <form id="undertaking-form" action="{% url 'student_registration' %}">
+          <div class="agree-section">
+            <input type="checkbox" id="agreeCheck" name="agree" required />
+            <label for="agreeCheck">I agree to the above undertaking.</label>
+          </div>
+          <div class="submit-section">
+            <button type="submit" href="{% url 'student_registration' %}">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

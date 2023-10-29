@@ -29,9 +29,9 @@
       }
 
       .login-container {
-        width: 650px;
+        width: 300px;
         padding: 20px;
-        background: #2d60ac;
+        background: #e6f0ff;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
@@ -48,7 +48,7 @@
       }
 
       .logo {
-        width: 240px;
+        width: 120px;
         height: auto;
         display: block;
         margin: 0 auto;
@@ -130,8 +130,8 @@
           alt="Company Logo"
         />
       </div>
-      <h2>STUDENT Login</h2>
-      <form method="post" action="{% url 'home' %}">
+      <h2>TNP ADMIN Login</h2>
+      <form method="post" action="{% url 'tnp_home' %}">
         {% csrf_token %}
         <input type="text" name="T_ID" placeholder="Username" required />
         <input
@@ -143,13 +143,10 @@
         <input type="submit" value=" LOGIN" />
       </form>
       <div class="login-buttons">
-        <a class="login-button" href="{% url 'coordinator_login' %}">COORDINATOR LOGIN</a>
-        <a class="login-button" href="{% url 'tnp_login' %}"
-          >TNP Admin LOGIN</a
-        
+        <a class="login-button" href="{% url 'student_login' %}">STUDENT LOGIN</a>
+        <a class="login-button" href="{% url 'coordinator_login' %}"
+          >COORDINATOR LOGIN</a
         >
-        <a class="login-button" href="{% url 'undertaking_submit' %}"
-          >REGISTER</a>
       </div>
   </body>
 </html>

@@ -3,16 +3,150 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coordinator Login</title>
+    <title>Student Login</title>
+    <style>
+      /* Reset some default styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Import the Montserrat font */
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+      /* Global styles */
+      body {
+        font-family: "Montserrat", sans-serif;
+        background: linear-gradient(to right, #3f7ad3, #5a9bea);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        text-align: center;
+      }
+
+      .login-container {
+        width: 650px;
+        padding: 20px;
+        background: #2d60ac;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .login-container h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #3f7ad3;
+      }
+
+      .logo-container {
+        margin-bottom: 20px;
+      }
+
+      .logo {
+        width: 240px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        animation: flip 3s ease-in-out infinite;
+      }
+
+      @keyframes flip {
+        0%,
+        100% {
+          transform: rotateY(0deg);
+        }
+        25% {
+          transform: rotateY(90deg);
+        }
+        50% {
+          transform: rotateY(180deg);
+        }
+        75% {
+          transform: rotateY(270deg);
+        }
+      }
+
+      .login-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      input[type="submit"] {
+        padding: 10px;
+        background-color: #3f7ad3;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #265992;
+      }
+
+      .login-buttons {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+      }
+
+      .login-button {
+        padding: 10px;
+        background-color: #3f7ad3;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .login-button:hover {
+        background-color: #265992;
+      }
+    </style>
   </head>
   <body>
-    <h2>Coordinator Login</h2>
-    <form method="post">
-      {% csrf_token %} {{ form.F_ID.label_tag }} {{ form.F_ID }}
-      <br />
-      {{ form.f_password.label_tag }} {{ form.f_password }}
-      <br />
-      <button type="submit">Login</button>
-    </form>
+    <div class="login-container">
+      <div class="logo-container">
+        <img
+          class="logo"
+          src="https://c.animaapp.com/oixjahaG/img/nexus-removebg-preview-1@2x.png"
+          alt="Company Logo"
+        />
+      </div>
+      <h2>COORDINATOR Login</h2>
+      <form method="post" action="{% url 'coordinator_home' %}">
+        {% csrf_token %}
+        <input type="text" name="T_ID" placeholder="Username" required />
+        <input
+          type="password"
+          name="t_password"
+          placeholder="Password"
+          required
+        />
+        <input type="submit" value=" LOGIN" />
+      </form>
+      <div class="login-buttons">
+        <a class="login-button" href="{% url 'student_login' %}">STUDENT LOGIN</a>
+        <a class="login-button" href="{% url 'tnp_login' %}"
+          >TNP ADMIN LOGIN</a
+        >
+      </div>
   </body>
 </html>
